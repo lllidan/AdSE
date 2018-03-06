@@ -71,6 +71,8 @@ def twoParameter(number):
     true = 0
     eval_combine = []
     eval_combine_str = ""
+    questions = set()
+    print("除法结果保留两位小数，整数保留小数点后第一个零")
     while True:
         num1 = random.randint(-10, 10)
         s1 = random.choice("+-*/")
@@ -85,7 +87,12 @@ def twoParameter(number):
         eval_combine_str = "".join(eval_combine)
 
         sums = str(round(eval(eval_combine_str), 2))
-
+        if eval_combine_str not in questions:
+            questions.add(eval_combine_str)
+        else:
+            eval_combine = []
+            eval_combine_str = ""
+            continue
         print(eval_combine_str)
         ans = input()
         if ans == sums:
@@ -98,6 +105,9 @@ def twoParameter(number):
         eval_combine_str = ""
         if counts is number:
             calscore(true,number)
+            writeYN = input("是否要将本次的练习题写入到文件中？(y/n)")
+            if writeYN == 'y':
+                writetofile(questions)
             break
         else:
             counts += 1
@@ -111,8 +121,11 @@ def writetofile(strs):
     name = time.strftime('%Y-%m-%d-%H_%M_%S', time.localtime(time.time()))
     name = name+".txt"
     with open(name, 'w') as f:
+        f.write(time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time())) + "\n")
+        f.write("题目为：" + "\n")
         for str in strs:
             f.write(str+"=\n")
+    print("题目文件生成成功，名字为%s"%name)
 
 
 number = 0
