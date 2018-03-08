@@ -1,0 +1,3 @@
+eclipse.preferences.version=1
+validator.Checked=WebRoot/login.jsp,WebRoot/register.jsp,WebRoot/list.jsp,src/struts.xml
+validator.Unchecked=

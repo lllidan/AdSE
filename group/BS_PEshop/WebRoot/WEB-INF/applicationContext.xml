@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+	
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
+		<property name="url" value="jdbc:mysql://localhost:3306/pe_shop"></property>
+		<property name="username" value="root"></property>
+		<property name="password" value="123456"></property>
+		<property name="maxActive" value="100"></property>
+		<property name="maxIdle" value="30"></property>
+		<property name="maxWait" value="500"></property>
+		<property name="defaultAutoCommit" value="true"></property>
+	</bean>
+
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+				<prop key="hibernate.show_sql">true</prop>
+			</props>
+		</property>
+		<property name="mappingResources">
+			<list>
+				<value>org/model/ReceiverInfo.hbm.xml</value>
+				<value>org/model/Distribute.hbm.xml</value>
+				<value>org/model/UserInfo.hbm.xml</value>
+				<value>org/model/Goods.hbm.xml</value>
+				<value>org/model/GoodsList.hbm.xml</value>
+				<value>org/model/Comment.hbm.xml</value>
+				<value>org/model/Order.hbm.xml</value>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- Action -->
+	
+	<bean id="testAction" class="org.action.TestAction">
+	</bean>	
+	
+	
+	<bean id="loginAction" class="org.action.LoginAction">
+		<property name="loginService" ref="userService"></property>
+	</bean>	
+	
+	<!-- GuestAction -->
+	<bean id="userAction" class="org.action.guest.UserAction">
+		<property name="userService" ref="userService"></property>
+	</bean>
+	<bean id="goodsAction" class="org.action.guest.GoodsAction">
+		<property name="goodsService" ref="goodsService"></property>
+	</bean>
+	<bean id="orderAction" class="org.action.guest.OrderAction">
+		<property name="orderService" ref="orderService"></property>
+		<property name="userService" ref="userService"></property>
+	</bean>
+	
+	<!-- AdminAction -->
+	<bean id="userManAction" class="org.action.admin.UserManAction">
+		<property name="userService" ref="userService"></property>
+	</bean>
+	<bean id="goodsManAction" class="org.action.admin.GoodsManAction">
+		<property name="goodsService" ref="goodsService"></property>
+	</bean>
+	<bean id="orderManAction" class="org.action.admin.OrderManAction">
+		<property name="orderService" ref="orderService"></property>
+	</bean>	
+	
+	<!-- Service -->
+	<bean id="userService" class="org.service.impl.UserServiceImpl">
+		<property name="userDao" ref="userDAO"></property>
+		<property name="receiverDao" ref="receiverDAO"></property>
+	</bean>
+	<bean id="goodsService" class="org.service.impl.GoodsServiceImpl">
+		<property name="goodsDao" ref="goodsDAO"></property>
+		<property name="commentDao" ref="commentDAO"></property>
+	</bean>	
+	<bean id="orderService" class="org.service.impl.OrderServiceImpl">
+		<property name="orderDao" ref="orderDAO"></property>
+		<property name="goodsListDao" ref="goodsListDAO"></property>
+		<property name="distributeDao" ref="distributeDAO"></property>
+		<property name="userService" ref="userService"></property>
+		<property name="goodsService" ref="goodsService"></property>
+	</bean>	
+	
+	
+	<!-- DAO -->
+	<bean id="distributeDAO" class="org.dao.imp.DistributeDaoImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="commentDAO" class="org.dao.imp.CommentDaoImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="goodsDAO" class="org.dao.imp.GoodsDaoImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="orderDAO" class="org.dao.imp.OrderDaoImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="goodsListDAO" class="org.dao.imp.GoodsListDaoImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="userDAO" class="org.dao.imp.UserInfoDaoImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="receiverDAO" class="org.dao.imp.ReceiverInfoDaoImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	
+</beans>

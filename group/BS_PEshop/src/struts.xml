@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">    
+    
+<struts>
+	<include file="struts-default.xml"/>
+
+	<package name="ajax" extends="struts-default"> 
+        <action name="AjaxTest" class="org.action.AjaxTestAction"> 
+            <result>/AjaxResult.jsp</result>
+        </action> 
+        <action name="Test3"> 
+            <result>/testjs.jsp </result> 
+        </action> 
+    </package> 
+
+	<package name="pe_shop" extends="struts-default">
+		<action name="test" class="testAction">
+ 			<result name="success">/test.jsp</result>
+ 		</action>
+ 	
+ 		<action name="login" class="loginAction">
+ 			<result name="success">/login_success.jsp</result>
+ 			<result name="error">/frame_main.html</result>
+ 		</action>
+ 		<action name="register" class="loginAction" method="register">
+ 			<result name="success">/register_success.jsp</result>
+ 			<result name="error">/register.jsp</result>
+ 		</action>
+	</package>
+
+	<package name="guest" extends="struts-default">
+	<!-- Guest前台部分 -->
+ 		<!-- 用户信息管理 -->
+ 		<action name="showUserInfo" class="userAction">
+ 			<result name="success">/guest/show_userInfo.jsp</result>
+ 		</action>
+ 		<action name="getPic" class="userAction" method="getPic" />
+ 		<action name="updateUserInfo" class="userAction" method="updateUserInfo">
+			<result name="success">/guest/update_userInfo.jsp</result>
+		</action>
+		<action name="updateUser" class="userAction" method="updateUser">
+			<result name="success" type="chain">showUserInfo</result>
+		</action>
+		<action name="updatePassword" class="userAction" method="updatePassword">
+			<result name="success" type="redirect">/frame_main.html</result>
+			<result name="error">/guest/update_password.jsp</result>
+		</action>
+		<action name="showReceivers" class="userAction" method="showReceiverList">
+			<result name="success">/guest/show_receivers.jsp</result>
+		</action>
+		<action name="showReceiver" class="userAction" method="showReceiver">
+			<result name="success">/guest/update_receiver.jsp</result>
+		</action>
+		<action name="addReceiver" class="userAction" method="saveReceiver">
+			<result name="success" type="chain">showReceivers</result>
+		</action>
+		<action name="updateReceiver" class="userAction" method="updateReceiver">
+			<result name="success" type="chain">showReceivers</result>
+		</action>
+		<action name="deleteReceiver" class="userAction" method="deleteReceiver">
+			<result name="success" type="chain">showReceivers</result>
+		</action>
+		
+		<!-- 商品展示 -->
+		<action name="listGoods" class="goodsAction" method="listGoods">
+			<result name="success">/guest/list_goods.jsp</result>
+		</action>
+		<action name="listGoodsInfo" class="goodsAction" method="listGoodsInfo">
+			<result name="success">/guest/list_goodsInfo.jsp</result>
+		</action>
+		<action name="addGoodsComment" class="goodsAction" method="addGoodsComment">
+			<result name="success">/guest/new_commentInfo.jsp</result>
+		</action>
+		<action name="addShopcar" class="goodsAction" method="addShopcar">
+			<result name="success" type="chain">addInShopcar</result>
+		</action>
+		<action name="queryGoods" class="goodsAction" method="queryGoods">
+			<result name="success">/guest/list_goods.jsp</result>
+		</action>
+		
+		<!-- 购物车部分 -->
+		<action name="showShopcar" class="orderAction" method="showShopcar">
+			<result name="success">/guest/list_shopCar.jsp</result>
+		</action>
+		<action name="addInShopcar" class="orderAction" method="addInShopcar">
+			<result name="success">/guest/addInShopcar_success.jsp</result>
+		</action>
+		<action name="updateShopcar" class="orderAction" method="updateShopcar">
+			<result name="success" type="chain">showShopcar</result>
+		</action>
+		<action name="deleteShopcar" class="orderAction" method="deleteShopcar">
+			<result name="success" type="chain">showShopcar</result>
+		</action>
+		
+		
+		<!-- 订单管理 -->
+		<action name="showUserOrders" class="orderAction" method="showUserOrders">
+			<result name="success">/guest/list_orders.jsp</result>
+		</action>
+		<action name="showUserOrder" class="orderAction" method="showUserOrder">
+			<result name="success">/guest/list_orderInfo.jsp</result>
+		</action>
+		<action name="createUserOrder" class="orderAction" method="createUserOrder">
+			<result name="success">/guest/new_order.jsp</result>
+			<result name="error" type="chain">
+				<param name="actionName">showShopcar</param>  
+				<param name="order_id">${order_id}</param>
+			</result>
+		</action>
+		<action name="addUserOrder" class="orderAction" method="addUserOrder">
+			<result name="success" type="chain">
+				<param name="actionName">showUserOrder</param>  
+				<param name="order_id">${order_id}</param>
+			</result>
+			<result name="error" type="chain">
+				<param name="actionName">showShopcar</param>  
+				<param name="order_id">${order_id}</param> 
+			</result>
+		</action>
+		<action name="confirmOrder" class="orderAction" method="confirmOrder">
+			<result name="success">/guest/new_comment.jsp</result>
+		</action>
+		<action name="updateUserOrder" class="orderAction" method="updateUserOrder">
+			<result name="success" type="chain">showUserOrders</result>
+		</action>
+		<action name="deleteUserOrder" class="orderAction" method="deleteUserOrder">
+			<result name="success" type="chain">showUserOrders</result>
+		</action>	
+	</package>
+
+	<package name="administrator" extends="struts-default">
+	<!-- Admin后台部分 -->
+		<!-- 用户管理 -->
+		<action name="showUsers" class="userManAction" method="showUsers">
+			<result name="success">/administrator/manage_users.jsp</result>
+		</action>
+		<action name="showUser" class="userManAction" method="showUser">
+			<result name="success">/administrator/manage_userInfo.jsp</result>
+		</action>
+		<action name="addAdminUser" class="userManAction" method="addAdminUser">
+			<result name="success" type="chain">showUsers</result>
+		</action>
+		<action name="deleteUser" class="userManAction" method="deleteUser">
+			<result name="success" type="chain">showUsers</result>
+		</action>
+		
+		<!-- 商品管理 -->
+		<action name="showGoods" class="goodsManAction" method="showGoods">
+			<result name="success">/administrator/manage_goods.jsp</result>
+		</action>
+ 		<action name="getGoodsPic" class="goodsManAction" method="getGoodsPic" />
+		<action name="showGoodsInfo" class="goodsManAction" method="showGoodsInfo">
+			<result name="success">/administrator/manage_goodsInfo.jsp</result>
+		</action>
+		<action name="addGoods" class="goodsManAction" method="saveGoods">
+			<result name="success" type="chain">showGoods</result>
+		</action>
+		<action name="updateGoods" class="goodsManAction" method="updateGoods">
+			<result name="success" type="chain">showGoods</result>
+		</action>
+		<action name="deleteGoods" class="goodsManAction" method="deleteGoods">
+			<result name="success" type="chain">showGoods</result>
+		</action>
+		
+	
+		<!-- 订单管理 -->
+		<action name="showOrders" class="orderManAction" method="showOrders">
+			<result name="success">/administrator/manage_orders.jsp</result>
+		</action>
+		<action name="showOrderInfo" class="orderManAction" method="showOrderInfo">
+			<result name="success">/administrator/manage_orderInfo.jsp</result>
+		</action>
+		<action name="updateOrderInfo" class="orderManAction" method="updateOrderInfo">
+			<result name="success" type="chain">showOrderInfo</result>
+		</action>
+		<action name="deleteOrderInfo" class="orderManAction" method="deleteOrderInfo">
+			<result name="success" type="chain">showOrders</result>
+		</action>
+		
+		
+		<!-- 信息管理 -->
+		<action name="showComments" class="goodsManAction" method="showComments">
+			<result name="success">/administrator/manage_comment.jsp</result>
+		</action>
+		<action name="showCommentInfo" class="goodsManAction" method="showCommentInfo">
+			<result name="success">/administrator/manage_commentInfo.jsp</result>
+		</action>
+		<action name="addComment" class="goodsManAction" method="addComment">
+			<result name="success" type="chain">showComments</result>
+		</action>
+		<action name="deleteComment" class="goodsManAction" method="deleteComment">
+			<result name="success" type="chain">showComments</result>
+		</action>	
+		
+		<action name="showDistribute" class="orderManAction" method="showDistribute">
+			<result name="success">/administrator/manage_distribute.jsp</result>
+		</action>
+		<action name="addDistributeInfo" class="orderManAction" method="addDistributeInfo">
+			<result name="success" type="chain">showDistribute</result>
+		</action>
+		<action name="updateDistributeInfo" class="orderManAction" method="updateDistributeInfo">
+			<result name="success" type="chain">showDistribute</result>
+		</action>
+		<action name="deleteDistributeInfo" class="orderManAction" method="deleteDistributeInfo">
+			<result name="success" type="chain">showDistribute</result>
+		</action>	
+	</package>
+ 	 
+</struts>

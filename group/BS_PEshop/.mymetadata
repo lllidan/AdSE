@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="BS_PEshop"
+  id="myeclipse.1389227720569"
+  context-root="/BS_PEshop"
+  j2ee-spec="5.0"
+  archive="BS_PEshop.war">
+  <attributes>
+    <attribute name="webrootdir" value="WebRoot" />
+  </attributes>
+</project-module>
+

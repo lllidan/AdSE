@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Struts2Diagram version="2.0">
+  <package name="ajax" location="556,48" size="225,171">
+    <action name="AjaxTest" location="64,60" size="96,41">
+      <result name="success">
+        <resourceEdge source="success" routing="0" target="AjaxResult.jsp" />
+      </result>
+    </action>
+    <action name="Test3" location="65,115" size="98,41">
+      <result name="success">
+        <resourceEdge source="success" routing="0" target="testjs.jsp" />
+      </result>
+    </action>
+  </package>
+  <webResource name="AjaxResult.jsp" path="/AjaxResult.jsp" location="861,98" size="150,55" />
+  <webResource name="testjs.jsp" path="/testjs.jsp" location="862,167" size="150,55" />
+  <include file="struts-default.xml" location="63,491" size="150,30" />
+  <package name="administrator" location="555,264" size="616,786" />
+</Struts2Diagram>
+
