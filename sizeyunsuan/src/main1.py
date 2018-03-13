@@ -26,42 +26,53 @@ def threeParameter(total, scope,jingdu,negative):
     ans = 0
     anses = ""
     while True:
+        # 根据输入的参数，随机生成对应的参加操作的操作数
         if negative == 'y':
+            # 有负数
             num1 = random.randint(oscope, scope)
             num2 = random.randint(oscope, scope)
             num3 = random.randint(oscope, scope)
         else:
+            # 不存在负数
             num1 = random.randint(0, scope)
             num2 = random.randint(0, scope)
             num3 = random.randint(0, scope)
+        # 生成对应的操作运算符
         s1 = random.choice("+-*/")
         s2 = random.choice("+-*/")
+        # 将操作符、运算数组合成完整的表达式
         eval_combine.append(str(num1))
         eval_combine.append(str(s1))
         eval_combine.append(str(num2))
         eval_combine.append(str(s2))
         eval_combine.append(str(num3))
-
         eval_combine_str = "".join(eval_combine)
+        # 判断生成的表达式是否已经存在， 如果已经存在，则重新生成
         if eval_combine_str not in questions:
+            # 如果不存在，加入问题列表存储
             questions.add(eval_combine_str)
         else:
             continue
+        # 计算表达式的值
         sums = str(round(eval(eval_combine_str), jingdu))
-
+        # 保存答案
         anses = anses + str(counts) + "、" + str(sums) + "  "
-
-
+        # 将表达式打印到屏幕上
         print(eval_combine_str + "=")
+        # 接收用户输入的答案
         ans = input()
         if ans == sums:
             print("你对了!")
+            # 正确数量加一
             true = true + 1
         else:
+            # 回答错误的时候提醒正确答案
             print("你错了,正确的答案是%s"%sums)
+        # 清空存储变量
         eval_combine = []
         eval_combine_str = ""
         if counts is total:
+            # 计算得分
             calscore(true, number)
             writeYN = input("是否要将本次的练习题写入到文件中？(y/n)")
             if writeYN == 'y':
