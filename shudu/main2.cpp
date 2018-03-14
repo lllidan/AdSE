@@ -6,7 +6,7 @@
 #include<fstream>
 #include"text.h"
 using namespace std;
-
+#define MAX 10
 /*
 利用回溯法构造数独
 修改了num[0][0]的赋值，只需在开始遍历时赋值，而不是在遍历的时候判断是否该位置为[0][0]，提高效率，减少运行时间
@@ -55,10 +55,7 @@ bool IsS::IsSuitable(int row, int col) {
 bool Gen::generate(int row, int col) {
 	int nextrow, nextcol;
 	vector<int> number;
-	//if (row == 0 && col == 0) 
-	//	number.push_back((3 + 2) % 9 + 1);			//应作业要求，矩阵第一个位置固定为6 
-	//else
-		for (int i = 1; i <= 9; i++)
+	for (int i = 1; i <= 9; i++)
 			number.push_back(i);										//将1-9装入容器 
 	while (!number.empty()) {
 		int randindex = rand() % number.size();  				//随机产生1-9里的 1 个 数字num
@@ -134,8 +131,10 @@ int main() {
 	//srand((unsigned)time(NULL));
 
 	ocout << "您请求的生成的" << N << "个随机数独矩阵如下:" << endl;
+	srand( (unsigned)time( NULL ) );//srand()函数产生一个以当前时间开始的随机种子.应该放在for等循环语句前面 不然要很长时间等待
+	
 	for (int i = 0; i<N; i++) {
-		//num[0][0] = 6;
+		num[0][0] = rand()%MAX;
 		Gene.generate(0, 1); 													//从0,0位置开始遍历生成随机数独矩阵 
 		outputTotext();
 		outputTocmd();

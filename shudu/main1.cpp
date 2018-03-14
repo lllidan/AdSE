@@ -4,8 +4,9 @@
 #include<ctime>
 #include<vector>
 #include<fstream>
+#include <time.h> 
 using namespace std;
-
+#define MAX 10 
 /*基本思想
 利用回溯法构造数独模板，利用模板算法生成最终的数独矩阵
 这种方法优点是速度快，但是缺点是当每个模板生成的数独矩阵过多，即GRAND过大，则很可能会产生重复。
@@ -169,7 +170,7 @@ int main(int agrc,char* agrv[]) {
 	int CharJduge;
 	clock_t start, finish;
 	double totaltime;
-
+	int random = 
 	start = clock();
 	int N;
 	ocout.open("sudoku.txt");
@@ -180,15 +181,24 @@ int main(int agrc,char* agrv[]) {
 	sum = CharJduge;
 	cout << "您请求的生成的" << N << "个随机数独矩阵如下:" << endl;
 	int count = 0;
+	srand( (unsigned)time( NULL ) );
 	for (int i = 0; i < CharJduge / GRAND + 1; i++) {
-		num[0][0] = 6;
+		random = rand()%MAX;
+		if(random==0)
+		{
+			i--;
+			continue;
+		}
+
+		num[0][0] = 3;
+		printf("random is %d",random);
 		generate(0, 1); 													//从0,0位置开始遍历生成随机数独矩阵 																	
 		for (int x = 0; x < 9; x++) {
 			for (int y = 0; y < 9; y++) {
-				if (num[x][y] == 6) model[x][y] = 'i';
+				if (num[x][y] == 3) model[x][y] = 'i';
 				else if (num[x][y] == 1) model[x][y] = 'a';
 				else if (num[x][y] == 2) model[x][y] = 'b';
-				else if (num[x][y] == 3) model[x][y] = 'c';
+				else if (num[x][y] == 6) model[x][y] = 'c';
 				else if (num[x][y] == 4) model[x][y] = 'd';
 				else if (num[x][y] == 5) model[x][y] = 'e';
 				else if (num[x][y] == 7) model[x][y] = 'f';
