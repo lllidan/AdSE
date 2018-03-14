@@ -171,7 +171,7 @@ def testpaper(number, scope, jingdu, negative):
     ans = 0
     anses = ""
     while True:
-        print("第%d道" % counts)
+        # print("第%d道" % counts)
         if negative == 'y':
             num1 = random.randint(oscope, scope)
             num2 = random.randint(oscope, scope)
@@ -197,7 +197,7 @@ def testpaper(number, scope, jingdu, negative):
         try:
             sums = str(round(eval(eval_combine_str), jingdu))
         except ZeroDivisionError as e:
-            print("except:", e)
+            # print("except:", e)
             eval_combine = []
             eval_combine_str = ""
             continue
@@ -259,7 +259,7 @@ print("欢迎使用数学计算题学习系统：")
 difficult = 0
 number = 0
 mode = 0
-mode = int(input("请输入需要选择的模式：1、练习模式 2、考试模式"))
+mode = int(input("请输入需要选择的模式：1、练习模式 2、考试模式:"))
 if mode == 1:
     difficult = int(input("请输入选择的类型：1、简单(两个操作数的小数字运算)2、多操作数的大数字计算"))
     number = int(input("请输入题目的数量："))
