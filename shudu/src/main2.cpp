@@ -9,7 +9,6 @@ using namespace std;
 #define MAX 10
 /*
 利用回溯法构造数独
-修改了num[0][0]的赋值，只需在开始遍历时赋值，而不是在遍历的时候判断是否该位置为[0][0]，提高效率，减少运行时间
 */
 
 const int SIZE = 9;
@@ -85,7 +84,7 @@ bool Gen::generate(int row, int col) {
 
 }
 
-
+//打印输出到终端
 void outputTocmd() {
 	for (int i = 0; i < SIZE; i++) {
 		for (int j = 0; j < SIZE; j++) {
