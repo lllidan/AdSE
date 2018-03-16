@@ -4,7 +4,6 @@
 #include<ctime>
 #include<vector>
 #include<fstream>
-#include"text.h"
 using namespace std;
 #define MAX 10
 /*
@@ -12,21 +11,33 @@ using namespace std;
 */
 
 const int SIZE = 9;
+
 vector<vector <int> > num(SIZE, vector<int>(SIZE));
+class IsS{
+public:
+	bool IsSuitable(int row, int col);
+};
+
+
+class Gen {
+public:
+	bool generate(int row, int col);
+};
+
 
 IsS IsSu;
 Gen Gene;
-ofstream ocout;//定义输出流的一个对象
+ofstream ocout;													//定义输出流的一个对象
 
 
 bool IsS::IsSuitable(int row, int col) {
 	int n = num[row][col];
 	for (int i = 0; i < row; i++) {
 		if (num[i][col] == n) return false;
-	}   												//判断n是否已经存在所在列 
+	}   														//判断n是否已经存在所在列 
 	for (i = 0; i < col; i++) {
 		if (num[row][i] == n) return false;
-	}  													//判断n是否已经存在所在行 
+	}  															//判断n是否已经存在所在行 
 	int RowStart = row / 3;
 	RowStart *= 3;
 	int RowEnd = RowStart + 2;
@@ -34,13 +45,13 @@ bool IsS::IsSuitable(int row, int col) {
 	ColStart *= 3;
 	int ColEnd = ColStart + 2;
 	i = RowStart;
-	int j = ColStart;  					//RowStart,RowEnd,ColStart,ColEnd标志该位置所在的九宫格的起始	
+	int j = ColStart;  											//RowStart,RowEnd,ColStart,ColEnd标志该位置所在的九宫格的起始	
 
 	for (int k = 1; k <= 8; k++) {
 		if (row != i || col != j) {
 			if (num[i][j] == n) return false;
 		}
-		else  break;                                    //判别所给数字是否与九宫格中的数字存在冲突 
+		else  break;											//判别所给数字是否与九宫格中的数字存在冲突 
 		if (j == ColEnd) {
 			j = ColStart;
 			i++;
@@ -49,13 +60,13 @@ bool IsS::IsSuitable(int row, int col) {
 			j++;
 		}
 	}  return true;
-}  																	//判别该数填在该位置是否合适 
+}  																//判别该数填在该位置是否合适 
 
 bool Gen::generate(int row, int col) {
 	int nextrow, nextcol;
 	vector<int> number;
 	for (int i = 1; i <= 9; i++)
-			number.push_back(i);										//将1-9装入容器 
+			number.push_back(i);								//将1-9装入容器 
 	while (!number.empty()) {
 		int randindex = rand() % number.size();  				//随机产生1-9里的 1 个 数字num
 		int randnum = number[randindex];
@@ -74,13 +85,10 @@ bool Gen::generate(int row, int col) {
 			nextrow = row;
 			nextcol = ++col;
 		}  														//nextrow，nextcol指向下一个空格 
-		bool next = generate(nextrow, nextcol);						//递归遍历整个数独矩阵  
-		if (next)  return true; 								 	//当返回ture时 矩阵成功生成
-	}
-	if (number.empty()) {
-		
-		return false;
-	} 															//生成的时候卡住了便回溯上一层 
+		bool next = generate(nextrow, nextcol);					//递归遍历整个数独矩阵  
+		if (next)  return true; 								 //当返回ture时 矩阵成功生成
+	}	
+		return false;											//生成的时候卡住了便回溯上一层 
 
 }
 
@@ -130,11 +138,11 @@ int main() {
 	//srand((unsigned)time(NULL));
 
 	ocout << "您请求的生成的" << N << "个随机数独矩阵如下:" << endl;
-	srand( (unsigned)time( NULL ) );//srand()函数产生一个以当前时间开始的随机种子.应该放在for等循环语句前面 不然要很长时间等待
+	srand( (unsigned)time( NULL ) );											//srand()函数产生一个以当前时间开始的随机种子.应该放在for等循环语句前面 不然要很长时间等待
 	
 	for (int i = 0; i<N; i++) {
-		num[0][0] = rand()%MAX;
-		Gene.generate(0, 1); 													//从0,0位置开始遍历生成随机数独矩阵 
+		//num[0][0] = rand()%MAX;
+		Gene.generate(0, 0); 													//从0,0位置开始遍历生成随机数独矩阵 
 		outputTotext();
 		outputTocmd();
 	}
