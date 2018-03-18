@@ -100,7 +100,7 @@ def twoParameter(number):
         ans:存储用户输入的答案
         anses：存储全部的标准答案
 
-    :return:
+    :return:无
     """
     num1 = 0
     num2 = 0
@@ -158,6 +158,13 @@ def twoParameter(number):
 
 
 def testpaper(number, scope, jingdu, negative):
+    """
+    根据传入的参数，生成符合要求的试卷，并存储到本地
+    :param number:试卷题目数量
+    :param scope:出现数字的大小
+    :param jingdu:小数保留的精度
+    :param negative:是否出现负数
+    """
     oscope = -scope
     num1 = 0
     num2 = 0
@@ -234,11 +241,23 @@ def testpaper(number, scope, jingdu, negative):
 
 
 def calscore(trues,numbers):
+    """
+    根据做对的题目数和总题目数，计算得分，满分100分
+    :param trues: 做对的题目数
+    :param numbers: 总题目数
+    :return:打印得分
+    """
     score = 100 * (trues / numbers)
     print("您这次的总分是%d" % (score))
 
 
 def writetofile(questions, anses):
+    """
+    将制定内容打印到本地
+    :param questions: 待打印的问题
+    :param anses: 与问题相匹配的答案
+    :return:文本文件，包含了题目和答案
+    """
     name = time.strftime('%Y-%m-%d-%H_%M_%S', time.localtime(time.time()))
     name = name+".txt"
     with open(name, 'w') as f:
